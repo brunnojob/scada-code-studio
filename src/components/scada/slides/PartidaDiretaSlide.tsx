@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { HMIPanel, PushButton, Lamp, Motor, StatusBar } from "../HMI";
 import { LadderRung, Contact, Coil, Wire } from "../Ladder";
 import { CodeView } from "../CodeView";
@@ -45,15 +45,17 @@ export function PartidaDiretaSlide() {
   const S0 = !s0Pressed; // contact passes when not pressed
   const FT = !fault;
 
-  const [k1, setK1] = useState(false);
-  // recompute on each render
-  const nextK1 = (s1 || k1) && S0 && FT;
-  if (nextK1 !== k1) {
-    // schedule
-    queueMicrotask(() => setK1(nextK1));
-  }
+  const [sealed, setSealed] = useState(false);
 
-  const rungEnergized = (s1 || k1) && S0 && FT;
+  useEffect(() => {
+    if (s1 && S0 && FT) setSealed(true);
+  }, [s1, S0, FT]);
+  useEffect(() => {
+    if (!S0 || !FT) setSealed(false);
+  }, [S0, FT]);
+
+  const k1 = sealed && S0 && FT;
+  const rungEnergized = k1;
 
   return (
     <div className="h-full flex flex-col gap-4">
