@@ -1,24 +1,41 @@
 # SCADA Code Studio
 
-faça um apresentacao scada de plc de comandos eletricos, onde eu possa interagir e ver o codigo muito profissional
+An interactive visual guide to PLC and electrical control concepts. Each scenario pairs an HMI-style process view with a ladder diagram and readable control logic.
 
-This project was built with [Lovable](https://lovable.dev).
+## Scenarios
 
-## Build with Lovable
+- Direct-on-line motor starting
+- Motor reversal
+- Star-delta starting
+- Traffic light sequencing
 
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/401f8f64-382a-4df0-9e8c-d31da6b1956b).
+The interface is built with React, TypeScript, TanStack Start, and Vite. The scenario components live in `src/components/scada`.
 
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
+## Run locally
 
-## Development
-
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+Requirements: Node.js and npm, or Bun.
 
 ```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
+bun install
+bun run dev
+```
+
+Or use npm:
+
+```sh
+npm install
 npm run dev
 ```
+
+Vite prints the local development URL when the server starts.
+
+## Available scripts
+
+- `npm run dev` starts the development server.
+- `npm run build` creates a production build.
+- `npm run preview` serves the production build locally.
+- `npm run lint` runs ESLint.
+
+## Scope
+
+This is a visual learning project. It does not connect to or control a physical PLC or live equipment. Do not use its simulations as a substitute for validated industrial control logic or safety procedures.
