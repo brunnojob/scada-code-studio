@@ -1,3 +1,4 @@
+import { useLanguage } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 import { type ReactNode } from "react";
 
@@ -129,6 +130,7 @@ export function Motor({
   label?: string;
   fault?: boolean;
 }) {
+  const { language } = useLanguage();
   return (
     <div className="flex flex-col items-center gap-2">
       <div
@@ -167,7 +169,7 @@ export function Motor({
         </div>
       </div>
       <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-        {fault ? "FAULT" : running ? `Running ${reverse ? "REV" : "FWD"}` : "Stopped"}
+        {fault ? (language === "pt" ? "FALHA" : "FAULT") : running ? `${language === "pt" ? "Em operação" : "Running"} ${reverse ? "REV" : "FWD"}` : language === "pt" ? "Parado" : "Stopped"}
       </div>
     </div>
   );

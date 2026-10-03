@@ -1,3 +1,4 @@
+import { useLanguage, Localized } from "@/lib/i18n";
 import { HMIPanel } from "../HMI";
 import { Cpu, Database, Eye, Network } from "lucide-react";
 
@@ -29,7 +30,9 @@ const blocks = [
 ];
 
 export function ConceptSlide() {
+  const { language } = useLanguage();
   return (
+    <Localized language={language}>
     <div className="h-full flex flex-col gap-6">
       <div>
         <div className="font-mono text-xs uppercase tracking-[0.32em] text-primary mb-2">
@@ -74,5 +77,6 @@ export function ConceptSlide() {
         </div>
       </HMIPanel>
     </div>
+    </Localized>
   );
 }
