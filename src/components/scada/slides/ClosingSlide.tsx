@@ -13,6 +13,7 @@ const points = [
 
 export function ClosingSlide() {
   const { language } = useLanguage();
+  const english = language === "en";
   return (
     <Localized language={language}>
     <div className="h-full flex flex-col gap-6">
@@ -37,19 +38,19 @@ export function ClosingSlide() {
         </div>
 
         <div className="col-span-5 flex flex-col gap-4">
-          <HMIPanel title="Próximos passos" className="flex-1">
+          <HMIPanel title={english ? "Next steps" : "Próximos passos"} className="flex-1">
             <div className="p-6 space-y-4">
               <Step n="01" t="Modbus TCP / OPC UA" d="Integre o CLP a um SCADA real e leia os tags via rede industrial." />
               <Step n="02" t="Alarmes e Históricos" d="Trate eventos críticos, registre tendências e gere relatórios." />
-              <Step n="03" t="Receitas e MES" d="Eleve a automação ao nível 3 — produção orientada a ordem." />
+              <Step n="03" t={english ? "Recipes and MES" : "Receitas e MES"} d="Eleve a automação ao nível 3 — produção orientada a ordem." />
             </div>
           </HMIPanel>
 
-          <HMIPanel title="Sistema · Online">
+          <HMIPanel title={english ? "System · Online" : "Sistema · Online"}>
             <div className="p-4 font-mono text-[11px] space-y-1 text-muted-foreground">
-              <div>[OK] Demonstração concluída sem alarmes</div>
-              <div>[OK] 4 cenários executados · 0 falhas</div>
-              <div className="text-accent">[END] Obrigado — pronto para perguntas.</div>
+              <div>[OK] {english ? "Demo completed without alarms" : "Demonstração concluída sem alarmes"}</div>
+              <div>[OK] {english ? "4 scenarios completed · 0 failures" : "4 cenários executados · 0 falhas"}</div>
+              <div className="text-accent">[END] {english ? "Thank you — ready for questions." : "Obrigado — pronto para perguntas."}</div>
             </div>
           </HMIPanel>
         </div>
