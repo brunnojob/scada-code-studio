@@ -62,6 +62,7 @@ export function CodeView({
   files: { name: string; lang: string; code: string }[];
   highlightLines?: Record<string, number[]>;
 }) {
+  const { language } = useLanguage();
   const [active, setActive] = useState(0);
   const file = files[active];
   const lines = file.code.split("\n");
