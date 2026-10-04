@@ -1,7 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useLanguage, type Language, Localized, LanguageContext, translateText } from "@/lib/i18n";
 import { useCallback, useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight, Activity, Cpu } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { PROFILE_AVATAR } from "@/lib/profile-avatar";
 import { IntroSlide } from "@/components/scada/slides/IntroSlide";
 import { ConceptSlide } from "@/components/scada/slides/ConceptSlide";
 import { PartidaDiretaSlide } from "@/components/scada/slides/PartidaDiretaSlide";
@@ -27,7 +29,7 @@ export const Route = createFileRoute("/")({
       },
     ],
   }),
-  component: Index,
+  component: Home,
 });
 
 const SLIDES = [
@@ -36,12 +38,25 @@ const SLIDES = [
   { id: "partida", title: "Partida Direta", section: "Cenário", Comp: PartidaDiretaSlide },
   { id: "reversao", title: "Reversão", section: "Cenário", Comp: ReversaoSlide },
   { id: "yd", title: "Estrela-Triângulo", section: "Cenário", Comp: EstrelaTrianguloSlide },
-  { id: "semaforo", title: "Semáforo", section: "Cenário", Comp: SemaforoSlide },
+  { id: "semaforo", title: "Semáforo Sequencial", section: "Cenário", Comp: SemaforoSlide },
   { id: "fim", title: "Encerramento", section: "Final", Comp: ClosingSlide },
 ];
 
+function Home() {
+  const [language, setLanguage] = useState<Language>("pt");
+  return (
+    <LanguageContext.Provider value={{ language, setLanguage }}>
+      <Index />
+    </LanguageContext.Provider>
+  );
+}
+
 function Index() {
+  const { language, setLanguage } = useLanguage();
   const [idx, setIdx] = useState(0);
+  useEffect(() => {
+    document.documentElement.lang = language === "pt" ? "pt-BR" : "en";
+  }, [language]);
   const total = SLIDES.length;
 
   const go = useCallback(
@@ -66,10 +81,10 @@ function Index() {
   const Current = SLIDES[idx].Comp;
 
   return (
+    <Localized language={language}>
     <div className="min-h-screen text-foreground flex flex-col">
-      {/* Top bar */}
       <header className="border-b border-border/60 bg-card/40 backdrop-blur-md">
-        <div className="px-6 py-3 flex items-center gap-6">
+        <div className="px-4 md:px-6 py-3 flex flex-wrap items-center gap-3 md:gap-5">
           <div className="flex items-center gap-2">
             <div className="h-8 w-8 rounded-md bg-primary/15 border border-primary/40 grid place-items-center">
               <Cpu className="h-4 w-4 text-primary" />
@@ -77,12 +92,17 @@ function Index() {
             <div>
               <div className="font-display font-bold text-sm leading-none">SCADA LIVE</div>
               <div className="font-mono text-[9px] uppercase tracking-[0.22em] text-muted-foreground mt-1">
-                PLC · Comandos Elétricos · IEC 61131-3
+                {language === "pt" ? "CLP · Comandos Elétricos · IEC 61131-3" : "PLC · Electrical Controls · IEC 61131-3"}
               </div>
             </div>
           </div>
 
-          <nav className="hidden md:flex items-center gap-1 ml-4">
+          <a href="https://brunnodev.store" className="flex items-center gap-3 border-l border-border/60 pl-4" aria-label="brunnodev profile">
+            <img src={PROFILE_AVATAR} alt="BrunnoDev profile" className="h-11 w-11 rounded-full border border-primary/60 object-cover" />
+            <span className="font-mono text-sm font-semibold tracking-wide text-foreground">brunnodev</span>
+          </a>
+
+          <nav className="hidden xl:flex items-center gap-1 ml-1">
             {SLIDES.map((s, i) => (
               <button
                 key={s.id}
@@ -94,12 +114,15 @@ function Index() {
                     : "text-muted-foreground hover:text-foreground hover:bg-secondary/60",
                 )}
               >
-                {String(i + 1).padStart(2, "0")} · {s.title}
+                {String(i + 1).padStart(2, "0")} · {translateText(s.title, language)}
               </button>
             ))}
           </nav>
 
-          <div className="ml-auto flex items-center gap-3 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
+          <div className="ml-auto flex items-center gap-2 md:gap-3 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
+            <button onClick={() => setLanguage(language === "pt" ? "en" : "pt")} className="rounded border border-border px-2 py-1 text-foreground hover:border-primary/70" aria-label={language === "pt" ? "Switch to English" : "Mudar para português"}>
+              {language === "pt" ? "PT / EN" : "EN / PT"}
+            </button>
             <div className="flex items-center gap-1.5">
               <Activity className="h-3.5 w-3.5 text-accent" />
               <span className="text-accent">RUN</span>
@@ -107,19 +130,17 @@ function Index() {
             <span>·</span>
             <span>CLP-01 · 192.168.0.10</span>
             <span>·</span>
-            <Clock />
+            <Clock language={language} />
           </div>
         </div>
       </header>
 
-      {/* Slide stage */}
       <main className="flex-1 px-6 py-6 min-h-0">
         <div key={SLIDES[idx].id} className="h-[calc(100vh-9.5rem)] animate-in fade-in slide-in-from-bottom-2 duration-300">
           <Current />
         </div>
       </main>
 
-      {/* Footer chrome */}
       <footer className="border-t border-border/60 bg-card/40 backdrop-blur-md px-6 py-2.5 flex items-center gap-4">
         <button
           onClick={() => go(idx - 1)}
@@ -140,9 +161,9 @@ function Index() {
           <span className="text-primary">{String(idx + 1).padStart(2, "0")}</span>
           <span>/</span>
           <span>{String(total).padStart(2, "0")}</span>
-          <span className="mx-2 text-foreground/80">{SLIDES[idx].title}</span>
+          <span className="mx-2 text-foreground/80">{translateText(SLIDES[idx].title, language)}</span>
           <span className="px-2 py-0.5 rounded border border-border bg-secondary/40 uppercase tracking-widest">
-            {SLIDES[idx].section}
+            {translateText(SLIDES[idx].section, language)}
           </span>
         </div>
 
@@ -154,25 +175,26 @@ function Index() {
         </div>
 
         <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground hidden sm:block">
-          ← / → navega · espaço avança
+          ← / → {language === "pt" ? "navega · espaço avança" : "navigate · space advances"}
         </div>
       </footer>
     </div>
+    </Localized>
   );
 }
 
-function Clock() {
+function Clock({ language }: { language: Language }) {
   const [t, setT] = useState<string>("--:--:--");
   useEffect(() => {
     const tick = () =>
       setT(
-        new Date().toLocaleTimeString("pt-BR", {
+        new Date().toLocaleTimeString(language === "pt" ? "pt-BR" : "en-US", {
           hour12: false,
         }),
       );
     tick();
     const id = setInterval(tick, 1000);
     return () => clearInterval(id);
-  }, []);
+  }, [language]);
   return <span>{t}</span>;
 }

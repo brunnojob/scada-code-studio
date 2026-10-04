@@ -1,29 +1,26 @@
+import { useLanguage, Localized } from "@/lib/i18n";
 import { useEffect, useRef, useState } from "react";
 import { HMIPanel, PushButton, Lamp, Motor, StatusBar } from "../HMI";
 import { LadderRung, Contact, Coil, Wire } from "../Ladder";
 import { CodeView } from "../CodeView";
 
-const ST_CODE = `(* === Partida Estrela-Triângulo (Y-Δ) ===
-   Reduz a corrente de partida em ~1/3
-   T#5s na configuração estrela, comuta para triângulo.
-*)
+const ST_CODE = `
 PROGRAM EstrelaTriangulo
 VAR_INPUT
     S0, S1, FT : BOOL;
 END_VAR
 VAR_OUTPUT
-    K1 : BOOL;   // Contator de linha
-    KY : BOOL;   // Estrela
-    KD : BOOL;   // Triângulo
+    K1 : BOOL;
+    KY : BOOL;
+    KD : BOOL;
 END_VAR
 VAR
-    T1 : TON;          // Temporizador de comutação
-    M  : BOOL;         // Memória de marcha
+    T1 : TON;
+    M  : BOOL;
 END_VAR
 
 M := (S1 OR M) AND S0 AND FT;
 
-// Temporizador 5 segundos
 T1(IN := M, PT := T#5s);
 
 K1 := M;
@@ -40,7 +37,7 @@ export function EstrelaTrianguloSlide() {
   const FT = !fault;
 
   const [M, setM] = useState(false);
-  const [elapsed, setElapsed] = useState(0); // ms
+  const [elapsed, setElapsed] = useState(0);
   const PT = 5000;
   const tickRef = useRef<number | null>(null);
 
@@ -75,8 +72,10 @@ export function EstrelaTrianguloSlide() {
   const KD = M && T1Q;
   const KY = M && !T1Q && !KD;
   const progress = Math.min(100, (elapsed / PT) * 100);
+  const { language } = useLanguage();
 
   return (
+    <Localized language={language}>
     <div className="h-full flex flex-col gap-4">
       <div className="flex items-end justify-between">
         <div>
@@ -179,5 +178,6 @@ export function EstrelaTrianguloSlide() {
         </div>
       </div>
     </div>
+    </Localized>
   );
 }

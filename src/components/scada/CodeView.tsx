@@ -1,3 +1,4 @@
+import { useLanguage } from "@/lib/i18n";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 
@@ -61,12 +62,12 @@ export function CodeView({
   files: { name: string; lang: string; code: string }[];
   highlightLines?: Record<string, number[]>;
 }) {
+  const { language } = useLanguage();
   const [active, setActive] = useState(0);
   const file = files[active];
   const lines = file.code.split("\n");
   const tokens = highlightST(file.code);
 
-  // Render tokenized code but split by lines to apply line backgrounds
   let lineIdx = 0;
   const rendered: { line: number; nodes: React.ReactNode[] }[] = [{ line: 1, nodes: [] }];
   tokens.forEach((tok, k) => {
@@ -129,7 +130,7 @@ export function CodeView({
       </div>
       <div className="px-3 py-1.5 border-t border-border bg-secondary/40 font-mono text-[10px] uppercase tracking-widest text-muted-foreground flex items-center justify-between">
         <span>{lines.length} linhas · IEC 61131-3</span>
-        <span className="text-accent">● Compilado · Online</span>
+        <span className="text-accent">● {language === "pt" ? "Compilado · Online" : "Compiled · Online"}</span>
       </div>
     </div>
   );

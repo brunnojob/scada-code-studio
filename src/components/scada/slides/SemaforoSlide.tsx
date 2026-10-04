@@ -1,14 +1,10 @@
+import { useLanguage, Localized } from "@/lib/i18n";
 import { useEffect, useRef, useState } from "react";
 import { HMIPanel, PushButton, Lamp, StatusBar } from "../HMI";
 import { LadderRung, Contact, Coil, Wire } from "../Ladder";
 import { CodeView } from "../CodeView";
 
-const ST_CODE = `(* === Controle de Semáforo Sequencial ===
-   Sequência de tempos por fase:
-     Verde  : 6 s
-     Amarelo: 2 s
-     Vermelho: 5 s
-*)
+const ST_CODE = `
 PROGRAM Semaforo
 VAR_INPUT
     START, STOP : BOOL;
@@ -17,7 +13,7 @@ VAR_OUTPUT
     GREEN, YELLOW, RED : BOOL;
 END_VAR
 VAR
-    STATE : INT := 0;     // 0=OFF 1=GREEN 2=YELLOW 3=RED
+    STATE : INT := 0;
     T     : TON;
     EN    : BOOL;
 END_VAR
@@ -88,8 +84,10 @@ export function SemaforoSlide() {
   const YELLOW = en && currentName === "YELLOW";
   const RED = en && currentName === "RED";
   const progress = (t / PHASES[phase].dur) * 100;
+  const { language } = useLanguage();
 
   return (
+    <Localized language={language}>
     <div className="h-full flex flex-col gap-4">
       <div className="flex items-end justify-between">
         <div>
@@ -180,6 +178,7 @@ export function SemaforoSlide() {
         </div>
       </div>
     </div>
+    </Localized>
   );
 }
 
