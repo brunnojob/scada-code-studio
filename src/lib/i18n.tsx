@@ -29,6 +29,7 @@ const translations: Record<string, string> = {
   "Interativo": "Interactive",
   "Linguagens": "Languages",
   "Tempo real": "Real time",
+  "SIMULAÇÃO": "SIMULATION",
   "Conexão CLP-01 estabelecida — 192.168.0.10:502": "PLC-01 connection established — 192.168.0.10:502",
   "Tag database carregado — 248 tags": "Tag database loaded — 248 tags",
   "01 · Arquitetura": "01 · Architecture",
@@ -50,6 +51,7 @@ const translations: Record<string, string> = {
   "HMI · Painel de Comando": "HMI · Control Panel",
   "Parar": "Stop",
   "Ligar": "Start",
+  "S1 · Ligar": "S1 · Start",
   "Modo": "Mode",
   "Diagrama Ladder · Online Monitor": "Ladder Diagram · Online Monitor",
   "Partida com selo e desligamento por S0 / FT": "Start with seal-in and shutdown by S0 / FT",
@@ -129,11 +131,11 @@ export function useLanguage() {
 
 export function translateText(value: string, language: Language) {
   if (language === "pt") return value;
-  const direct = translations[value];
-  if (direct) return direct;
-  const normalized = value.replace(/\\s+/g, " ").trim();
-  const translated = translations[normalized];
-  return translated ? value.replace(normalized, translated) : value;
+  const normalized = value.replace(/\s+/g, " ").trim().toLocaleLowerCase();
+  const match = Object.entries(translations).find(([source]) =>
+    source.replace(/\s+/g, " ").trim().toLocaleLowerCase() === normalized,
+  );
+  return match?.[1] ?? value;
 }
 
 function translateValue(value: unknown, language: Language): unknown {

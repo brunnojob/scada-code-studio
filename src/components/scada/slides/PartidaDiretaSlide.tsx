@@ -148,17 +148,20 @@ export function PartidaDiretaSlide() {
 }
 
 function Header({ num, title, sub }: { num: string; title: string; sub: string }) {
+  const { language } = useLanguage();
   return (
     <div className="flex items-end justify-between">
       <div>
         <div className="font-mono text-xs uppercase tracking-[0.32em] text-primary mb-2">
-          {num} · Cenário
+          {num} · {language === "en" ? "Scenario" : "Cenário"}
         </div>
         <h2 className="text-4xl font-bold">{title}</h2>
         <p className="text-muted-foreground mt-1">{sub}</p>
       </div>
       <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground text-right">
-        Pressione e segure as botoeiras<br />Observe a energização das trilhas
+        {language === "en"
+          ? <>Press and hold the push buttons<br />Watch the ladder rails energize</>
+          : <>Pressione e segure as botoeiras<br />Observe a energização das trilhas</>}
       </div>
     </div>
   );
