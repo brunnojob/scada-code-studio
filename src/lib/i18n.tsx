@@ -131,6 +131,11 @@ export function useLanguage() {
 
 export function translateText(value: string, language: Language) {
   if (language === "pt") return value;
+  const direct = translations[value];
+  if (direct) return direct;
+  const normalized = value.replace(/\\s+/g, " ").trim();
+  const translated = translations[normalized];
+  return translated ? value.replace(normalized, translated) : value;
   const normalized = value.replace(/\s+/g, " ").trim().toLocaleLowerCase();
   const match = Object.entries(translations).find(([source]) =>
     source.replace(/\s+/g, " ").trim().toLocaleLowerCase() === normalized,
