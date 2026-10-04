@@ -153,7 +153,7 @@ function Header({ num, title, sub }: { num: string; title: string; sub: string }
     <div className="flex items-end justify-between">
       <div>
         <div className="font-mono text-xs uppercase tracking-[0.32em] text-primary mb-2">
-          {num} · Cenário
+          {num} · {language === "en" ? "Scenario" : "Cenário"}
         </div>
         <h2 className="text-4xl font-bold">{title}</h2>
         <p className="text-muted-foreground mt-1">{sub}</p>
