@@ -1,11 +1,14 @@
+import { useLanguage, Localized } from "@/lib/i18n";
 import { HMIPanel } from "../HMI";
 
 export function IntroSlide() {
+  const { language } = useLanguage();
   return (
+    <Localized language={language}>
     <div className="grid grid-cols-12 gap-6 h-full">
       <div className="col-span-7 flex flex-col justify-center gap-6">
         <div className="font-mono text-xs uppercase tracking-[0.32em] text-primary">
-          // SCADA · PLC · Comandos Elétricos
+          SCADA · PLC · Comandos Elétricos
         </div>
         <h1 className="text-6xl font-bold tracking-tight leading-[0.95]">
           Automação Industrial
@@ -68,5 +71,6 @@ export function IntroSlide() {
         </HMIPanel>
       </div>
     </div>
+    </Localized>
   );
 }

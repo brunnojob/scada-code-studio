@@ -1,17 +1,10 @@
+import { useLanguage, Localized } from "@/lib/i18n";
 import { useEffect, useState } from "react";
 import { HMIPanel, PushButton, Lamp, Motor, StatusBar } from "../HMI";
 import { LadderRung, Contact, Coil, Wire } from "../Ladder";
 import { CodeView } from "../CodeView";
 
-const ST_CODE = `(* === Reversão de Motor com Intertravamento ===
-   S0  : PARAR        (NF)
-   S1  : DIRETO       (NA)
-   S2  : REVERSO      (NA)
-   FT  : Térmico      (NF)
-   K1  : Contator avanço
-   K2  : Contator recuo
-   Intertravamento elétrico evita K1 e K2 simultâneos.
-*)
+const ST_CODE = `
 PROGRAM Reversao
 VAR_INPUT
     S0, S1, S2, FT : BOOL;
@@ -20,10 +13,8 @@ VAR_OUTPUT
     K1, K2 : BOOL;
 END_VAR
 
-// Avanço — só liga se reverso (K2) estiver desligado
 K1 := (S1 OR K1) AND S0 AND FT AND NOT K2 AND NOT S2;
 
-// Recuo — só liga se avanço (K1) estiver desligado
 K2 := (S2 OR K2) AND S0 AND FT AND NOT K1 AND NOT S1;
 
 END_PROGRAM`;
@@ -55,7 +46,9 @@ export function ReversaoSlide() {
   const K1 = sealFwd && S0 && FT && !sealRev;
   const K2 = sealRev && S0 && FT && !sealFwd;
 
+  const { language } = useLanguage();
   return (
+    <Localized language={language}>
     <div className="h-full flex flex-col gap-4">
       <div className="flex items-end justify-between">
         <div>
@@ -142,5 +135,6 @@ export function ReversaoSlide() {
         </div>
       </div>
     </div>
+    </Localized>
   );
 }

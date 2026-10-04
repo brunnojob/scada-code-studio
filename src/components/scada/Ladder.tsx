@@ -16,7 +16,7 @@ export function LadderRung({
     <div className="group">
       {comment && (
         <div className="font-mono text-[11px] text-muted-foreground/80 pl-10 mb-1">
-          (* {comment} *)
+          
         </div>
       )}
       <div className="flex items-stretch gap-0">
@@ -58,7 +58,7 @@ export function Contact({
   on: boolean;
   normallyClosed?: boolean;
 }) {
-  // Contact passes when (NO and on) or (NC and !on)
+
   const passing = normallyClosed ? !on : on;
   return (
     <div className="flex flex-col items-center gap-1">

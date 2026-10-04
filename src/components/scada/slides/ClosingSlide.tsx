@@ -1,3 +1,4 @@
+import { useLanguage, Localized } from "@/lib/i18n";
 import { HMIPanel } from "../HMI";
 import { CheckCircle2 } from "lucide-react";
 
@@ -11,7 +12,9 @@ const points = [
 ];
 
 export function ClosingSlide() {
+  const { language } = useLanguage();
   return (
+    <Localized language={language}>
     <div className="h-full flex flex-col gap-6">
       <div>
         <div className="font-mono text-xs uppercase tracking-[0.32em] text-primary mb-2">
@@ -52,6 +55,7 @@ export function ClosingSlide() {
         </div>
       </div>
     </div>
+    </Localized>
   );
 }
 
