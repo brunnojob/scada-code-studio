@@ -18,7 +18,7 @@ Controls handle pointer input, cancellation, keyboard interaction, and loss of f
 
 ## Optional report archive
 
-Export a JSON report from the command above, then run `python cloud/sync.py enqueue result.json --project scada-code-studio` and `python cloud/sync.py sync`. Synchronization requires `BRUNNODEV_ACCESS_TOKEN` and the external operations API; the local outbox retains unacknowledged reports.
+Use the [shared operations archive client](https://github.com/brunnojob/vercel-home-telemetry-api/tree/main/cloud) to queue `result.json` under project `scada-code-studio`. The client uses `BRUNNODEV_ACCESS_TOKEN` and retains unacknowledged reports locally.
 
 ## License
 
