@@ -1,6 +1,7 @@
 import { useLanguage } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
-import { type ReactNode } from "react";
+import { type ReactNode, useRef } from "react";
+import { recordAction } from "./SessionRecorder";
 
 export function HMIPanel({
   title,
@@ -62,18 +63,50 @@ export function PushButton({
     blue: "from-sky-400 to-sky-700 ring-sky-400/60 text-background",
   }[color];
 
-  const handleDown = () => onPress();
+  const active = useRef(false);
+  const handleDown = () => {
+    if (active.current) return;
+    active.current = true;
+    recordAction(label, "pressed");
+    onPress();
+  };
   const handleUp = () => {
-    if (momentary && onRelease) onRelease();
+    if (!active.current) return;
+    active.current = false;
+    if (momentary && onRelease) {
+      recordAction(label, "released");
+      onRelease();
+    }
   };
 
   return (
     <button
-      onMouseDown={handleDown}
-      onMouseUp={handleUp}
-      onMouseLeave={momentary && pressed ? handleUp : undefined}
-      onTouchStart={handleDown}
-      onTouchEnd={handleUp}
+      type="button"
+      aria-pressed={pressed}
+      onPointerDown={(event) => {
+        event.currentTarget.setPointerCapture(event.pointerId);
+        handleDown();
+      }}
+      onPointerUp={handleUp}
+      onPointerCancel={handleUp}
+      onLostPointerCapture={() => {
+        if (pressed) handleUp();
+      }}
+      onBlur={() => {
+        if (pressed) handleUp();
+      }}
+      onKeyDown={(event) => {
+        if ((event.key === " " || event.key === "Enter") && !event.repeat) {
+          event.preventDefault();
+          handleDown();
+        }
+      }}
+      onKeyUp={(event) => {
+        if (event.key === " " || event.key === "Enter") {
+          event.preventDefault();
+          handleUp();
+        }
+      }}
       className="group flex flex-col items-center gap-2 select-none"
     >
       <div
@@ -169,13 +202,25 @@ export function Motor({
         </div>
       </div>
       <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-        {fault ? (language === "pt" ? "FALHA" : "FAULT") : running ? `${language === "pt" ? "Em operação" : "Running"} ${reverse ? "REV" : "FWD"}` : language === "pt" ? "Parado" : "Stopped"}
+        {fault
+          ? language === "pt"
+            ? "FALHA"
+            : "FAULT"
+          : running
+            ? `${language === "pt" ? "Em operação" : "Running"} ${reverse ? "REV" : "FWD"}`
+            : language === "pt"
+              ? "Parado"
+              : "Stopped"}
       </div>
     </div>
   );
 }
 
-export function StatusBar({ items }: { items: { label: string; value: string; tone?: "ok" | "warn" | "fault" }[] }) {
+export function StatusBar({
+  items,
+}: {
+  items: { label: string; value: string; tone?: "ok" | "warn" | "fault" }[];
+}) {
   return (
     <div className="flex flex-wrap items-center gap-x-6 gap-y-2 px-4 py-2 border-t border-border/60 bg-secondary/30 font-mono text-[11px]">
       {items.map((it) => (
