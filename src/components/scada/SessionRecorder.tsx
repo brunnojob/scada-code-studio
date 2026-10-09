@@ -16,9 +16,13 @@ export function SessionRecorder() {
     started.current = performance.now();
     const listener = (event: Event) => {
       const detail = (event as CustomEvent<Omit<Action, "atMs">>).detail;
+      if (!detail || typeof detail.label !== "string" || detail.label.length > 120 ||
+          !["pressed", "released"].includes(detail.state) || typeof detail.path !== "string" ||
+          detail.path.length > 2048 || !detail.path.startsWith("/")) return;
       setActions((previous) => [
         ...previous.slice(-999),
-        { ...detail, atMs: Math.round(performance.now() - started.current) },
+        { label: detail.label, state: detail.state, path: detail.path,
+          atMs: Math.round(performance.now() - started.current) },
       ]);
     };
     window.addEventListener("scada-action", listener);
