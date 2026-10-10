@@ -1,7 +1,10 @@
 {
   "repository": "brunnojob/scada-code-studio",
   "inputs": [
-    ".proof/scenarios.json"
+    ".proof/scenarios.json",
+    ".proof/browser-demo.mjs",
+    ".proof/browser/package.json",
+    ".proof/browser/package-lock.json"
   ],
   "cases": [
     {
@@ -29,6 +32,44 @@
       ],
       "timeout": 900,
       "display": true
+    },
+    {
+      "name": "Install isolated browser testing dependency",
+      "argv": [
+        "npm",
+        "ci",
+        "--prefix",
+        ".proof/browser",
+        "--ignore-scripts",
+        "--no-audit",
+        "--no-fund"
+      ],
+      "timeout": 900,
+      "display": false
+    },
+    {
+      "name": "Install Chromium for UI proof",
+      "argv": [
+        "node",
+        ".proof/browser/node_modules/playwright/cli.js",
+        "install",
+        "--with-deps",
+        "chromium"
+      ],
+      "timeout": 900,
+      "display": false
+    },
+    {
+      "name": "Operate actual HMI and export captured control actions",
+      "argv": [
+        "node",
+        ".proof/browser-demo.mjs"
+      ],
+      "timeout": 120,
+      "contains": [
+        "\"thermal_trip_stopped_motor\":true",
+        "\"reset_left_motor_stopped\":true"
+      ]
     }
   ]
 }

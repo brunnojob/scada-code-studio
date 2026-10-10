@@ -25,6 +25,9 @@ jobs:
         node-version: '24'
     - name: Record executable proof
       run: python .proof/record.py
+    - name: Expose actual browser proof image
+      run: python -c "import base64; from pathlib import Path; print('PROOF_BROWSER_PNG='
+        + base64.b64encode(Path('docs/proof/browser.png').read_bytes()).decode())"
     - name: Upload execution evidence
       if: always()
       uses: actions/upload-artifact@v4

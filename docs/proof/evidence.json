@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "repository": "brunnojob/scada-code-studio",
+  "source_commit": "3917acabd73c3655648f7faa15e86a342d9d215a",
+  "generated_at": "2026-10-10T02:35:12.424637+00:00",
+  "run_url": "https://github.com/brunnojob/scada-code-studio/actions/runs/38017502576",
+  "inputs_sha256": {
+    ".proof/scenarios.json": "29cc9ad632cbdedbd38b91e14b1eda862653c654a90536c5500375bca7b84b76"
+  },
+  "cases": [
+    {
+      "display": false,
+      "name": "npm ci",
+      "argv": [
+        "bash",
+        "-e",
+        "-o",
+        "pipefail",
+        "-c",
+        "npm ci"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "passed": true,
+      "seconds": 23.044,
+      "output": "npm warn deprecated tsconfck@3.1.6: unmaintained\nnpm warn deprecated node-domexception@1.0.0: Use your platform's native DOMException instead\nnpm warn deprecated recharts@2.15.4: 1.x and 2.x branches are no longer active. Bump to Recharts v3 to receive latest features and bugfixes. See https://github.com/recharts/recharts/wiki/3.0-migration-guide\nnpm warn deprecated eslint@9.39.5: This version is no longer supported. Please see https://eslint.org/version-support for other options.\n\nadded 1204 packages, and audited 1206 packages in 23s\n\n371 packages are looking for funding\n  run `npm fund` for details\n\n20 vulnerabilities (7 low, 13 high)\n\nSome issues need review, and may require choosing\na different dependency.\n\nRun `npm audit` for details.\nnpm warn install-scripts 2 packages have install scripts not yet covered by allowScripts:\nnpm warn install-scripts   esbuild@0.28.1 (postinstall: node install.js)\nnpm warn install-scripts   sharp@0.34.5 (install: node install/check.js || npm run build)\nnpm warn install-scripts\nnpm warn install-scripts Run `npm install-scripts ls` to review, or `npm install-scripts approve <pkg>` to allow.\n",
+      "output_sha256": "16f8662c2ce3eff9724a59c10c29ffb0a076efa6a11d3f1c1b7561b105e8075e"
+    },
+    {
+      "display": true,
+      "name": "npm run build",
+      "argv": [
+        "bash",
+        "-e",
+        "-o",
+        "pipefail",
+        "-c",
+        "npm run build"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "passed": true,
+      "seconds": 3.964,
+      "output": "\n> build\n> vite build\n\n[info] [nitro:vercel] Using `nodejs24.x` runtime.\n[info] [nitro:vercel] Using `web` entry format.\n\u001b[36mvite v8.3.4 \u001b[32mbuilding client environment for production...\u001b[36m\u001b[39m\ntransforming...\n✓ 1909 modules transformed.\nrendering chunks...\ncomputing gzip size...\n.vercel/output/static/assets/styles-Badzhjq-.css  101.74 kB │ gzip:  16.60 kB\n.vercel/output/static/assets/routes-DG533vX8.js    82.51 kB │ gzip:  25.99 kB\n.vercel/output/static/assets/index-BACqn5NB.js    370.20 kB │ gzip: 117.91 kB\n\n\u001b[32m✓ built in 836ms\u001b[39m\n\u001b[36mvite v8.3.4 \u001b[32mbuilding ssr environment for production...\u001b[36m\u001b[39m\ntransforming...\n✓ 73 modules transformed.\nrendering chunks...\ncomputing gzip size...\nnode_modules/.nitro/vite/services/ssr/assets/styles-Badzhjq-.css                     101.74 kB │ gzip: 16.60 kB\nnode_modules/.nitro/vite/services/ssr/assets/empty-plugin-adapters-D9UWiqvJ.js         0.22 kB │ gzip:  0.16 kB\nnode_modules/.nitro/vite/services/ssr/assets/rolldown-runtime-D7D4PA-g.js              0.36 kB │ gzip:  0.25 kB\nnode_modules/.nitro/vite/services/ssr/assets/_tanstack-start-manifest_v-TjghkEgY.js    0.56 kB │ gzip:  0.31 kB\nnode_modules/.nitro/vite/services/ssr/assets/start-ZGCRs25t.js                         1.42 kB │ gzip:  0.66 kB\nnode_modules/.nitro/vite/services/ssr/index.js                                         3.29 kB │ gzip:  1.42 kB\nnode_modules/.nitro/vite/services/ssr/assets/router-BK-j4Mgy.js                        8.85 kB │ gzip:  2.97 kB\nnode_modules/.nitro/vite/services/ssr/assets/server-B1YBbHGB.js                       69.66 kB │ gzip: 17.78 kB\nnode_modules/.nitro/vite/services/ssr/assets/routes-DzMt31Jk.js                       79.98 kB │ gzip: 18.44 kB\n\n\u001b[32m✓ built in 241ms\u001b[39m\n[start] [nitro] Building [\u001b[35mNitro\u001b[39m] \u001b[2m(preset: `vercel`, compatibility: `2026-10-10`)\u001b[22m\n[success] [nitro] Generated public \u001b[36m.vercel/output/static\u001b[39m\n\u001b[36mvite v8.3.4 \u001b[32mbuilding nitro environment for production...\u001b[36m\u001b[39m\n\u001b[33m`output.codeSplitting.groups[0].name` is a function. Set `output.codeSplitting.groups[0].debugName` so the bundler timing report can identify this group.\u001b[39m\ntransforming...\n✓ 1942 modules transformed.\nrendering chunks...\ncomputing gzip size...\n.vercel/output/functions/__server.func/_ssr/empty-plugin-adapters-D9UWiqvJ.mjs    0.23 kB │ gzip:   0.16 kB\n.vercel/output/functions/__server.func/_libs/clsx.mjs                             0.55 kB │ gzip:   0.31 kB\n.vercel/output/functions/__server.func/_chunks/ssr-renderer.mjs                   0.60 kB │ gzip:   0.36 kB\n.vercel/output/functions/__server.func/_tanstack-start-manifest_v-TjghkEgY.mjs    0.61 kB │ gzip:   0.34 kB\n.vercel/output/functions/__server.func/_ssr/start-ZGCRs25t.mjs                    1.38 kB │ gzip:   0.65 kB\n.vercel/output/functions/__server.func/_ssr/rolldown-runtime-D7D4PA-g.mjs         1.72 kB │ gzip:   0.81 kB\n.vercel/output/functions/__server.func/_ssr/ssr.mjs                               3.22 kB │ gzip:   1.42 kB\n.vercel/output/functions/__server.func/index.mjs                                  7.25 kB │ gzip:   2.59 kB\n.vercel/output/functions/__server.func/_libs/lucide-react.mjs                     8.02 kB │ gzip:   1.97 kB\n.vercel/output/functions/__server.func/_ssr/router-BK-j4Mgy.mjs                   9.63 kB │ gzip:   3.05 kB\n.vercel/output/functions/__server.func/_libs/tanstack__history.mjs               12.50 kB │ gzip:   3.70 kB\n.vercel/output/functions/__server.func/_libs/h3-v2+rou3+srvx.mjs         \nFull transcript in the execution-proof artifact.",
+      "output_sha256": "2b50f6a5a8790edd1c309cfaaf02cf52335af6ada95d3174a35eea1e19edd8d0",
+      "output_truncated": true
+    }
+  ],
+  "passed": true
+}
