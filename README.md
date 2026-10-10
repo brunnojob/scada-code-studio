@@ -28,7 +28,7 @@ Original source and documentation are MIT licensed; see [LICENSE](LICENSE). Thir
 
 Netlify builds use the official TanStack Start adapter with SSR output; the previous Nitro target remains available outside Netlify. Session recording validates action fields and exports only bounded, known fields. Use `NETLIFY=true npm run build` to verify the Netlify target locally.
 
-Contribution trailer: `Co-authored-by: nyctophile <329826984+ineedfoundmyway@users.noreply.github.com>`.
+Contribution trailer: `Co-authored-by: nyctophile <33561761+ineedfoundmyway@users.noreply.github.com>`.
 
 ## Execution proof
 
