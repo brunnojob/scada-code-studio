@@ -1,5 +1,7 @@
 # SCADA Code Studio
 
+[View execution evidence](https://brunnojob.github.io/devstart-lab/proofs/scada-code-studio/)
+
 An interactive interface for electrical controls, ladder diagrams, and motor states, with accessible controls and action-history export.
 
 ## Run
