@@ -1,0 +1,14 @@
+import { createRoot } from "react-dom/client";
+import { Home } from "../src/routes/index";
+import { SessionRecorder } from "../src/components/scada/SessionRecorder";
+import "../src/styles.css";
+
+const root = document.getElementById("root");
+if (!root) throw new Error("Application root was not found");
+
+createRoot(root).render(
+  <>
+    <Home />
+    <SessionRecorder />
+  </>,
+);

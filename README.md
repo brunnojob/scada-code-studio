@@ -1,5 +1,7 @@
 # SCADA Code Studio
 
+[Open the live application](https://brunnojob.github.io/scada-code-studio/)
+
 [View execution evidence](https://brunnojob.github.io/devstart-lab/proofs/scada-code-studio/)
 
 An interactive interface for electrical controls, ladder diagrams, and motor states, with accessible controls and action-history export.
@@ -17,6 +19,20 @@ npm run build
 ## Behavior
 
 Controls handle pointer input, cancellation, keyboard interaction, and loss of focus. History retains up to 1,000 actions and exports JSON for the operations archive. This is a training environment and does not control a physical PLC.
+
+## GitHub Pages
+
+The live application runs the same React simulation components entirely in the browser. The static build includes the repository base path and needs no backend or API credentials. The existing server build remains available through `npm run build`.
+
+```sh
+npm ci
+npm run build:pages
+npm run preview:pages
+```
+
+Open `http://localhost:4173/scada-code-studio/` to preview the production build. Pushes to `main` build and test the static application in Chromium before publishing it with the official GitHub Pages deployment actions. The browser check starts the motor, triggers the thermal trip, resets the protection, exports a session and rejects missing application assets or browser errors.
+
+[Pages deployment](https://github.com/brunnojob/scada-code-studio/actions/workflows/pages.yml)
 
 ## Optional report archive
 

@@ -42,7 +42,7 @@ const SLIDES = [
   { id: "fim", title: "Encerramento", section: "Final", Comp: ClosingSlide },
 ];
 
-function Home() {
+export function Home() {
   const [language, setLanguage] = useState<Language>("pt");
   return (
     <LanguageContext.Provider value={{ language, setLanguage }}>

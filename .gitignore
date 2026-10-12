@@ -59,3 +59,4 @@ build-native/
 runtime-regressions
 
 .netlify/
+dist-pages/
